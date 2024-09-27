@@ -2,51 +2,65 @@ const getTotalIsles = function (grid) {
 
 
   // write your code here
-  
-  const getTotalIsles = function (grid) {
-    // Function to count the islands
-    function countIslands(grid) {
-        if (!grid || grid.length === 0) {
-            return 0;
+  function numIslands(grid) {
+    if (!grid || grid.length === 0) return 0;
+
+    let islandCount = 0;
+
+    // Function to perform DFS and mark connected land as water
+    function dfs(row, col) {
+        // Check boundaries and ensure the current cell is land
+        if (
+            row < 0 ||
+            col < 0 ||
+            row >= grid.length ||
+            col >= grid[0].length ||
+            grid[row][col] === 'W'
+        ) {
+            return;
         }
 
-        const rows = grid.length;
-        const cols = grid[0].length;
-        const visited = new Set();
-        let islands = 0;
+        // Mark the current cell as water to avoid revisiting
+        grid[row][col] = 'W';
 
-        function dfs(i, j) {
-            // Check for out of bounds, water, or already visited
-            if (i < 0 || i >= rows || j < 0 || j >= cols || grid[i][j] === 'W' || visited.has(${i},${j})) {
-                return;
-            }
-
-            // Mark the cell as visited
-            visited.add(${i},${j});
-
-            // Explore all four directions
-            dfs(i + 1, j); // Down
-            dfs(i - 1, j); // Up
-            dfs(i, j + 1); // Right
-            dfs(i, j - 1); // Left
-        }
-
-        for (let i = 0; i < rows; i++) {
-            for (let j = 0; j < cols; j++) {
-                if (grid[i][j] === 'L' && !visited.has(${i},${j})) {
-                    islands++;
-                    dfs(i, j); // Start DFS from this land cell
-                }
-            }
-        }
-
-        return islands;
+        // Explore all four directions (up, down, left, right)
+        dfs(row + 1, col); // down
+        dfs(row - 1, col); // up
+        dfs(row, col + 1); // right
+        dfs(row, col - 1); // left
     }
 
-    return countIslands(grid);
-};
+    // Traverse the entire grid
+    for (let row = 0; row < grid.length; row++) {
+        for (let col = 0; col < grid[0].length; col++) {
+            // If we encounter land, start a new DFS to mark the entire island
+            if (grid[row][col] === 'L') {
+                islandCount++;
+                dfs(row, col);
+            }
+        }
+    }
 
-module.exports = getTotalIsles;
+    return islandCount;
+}
+
+// Test Cases
+const map1 = [
+    ["L", "L", "L", "L", "W"],
+    ["L", "L", "W", "L", "W"],
+    ["L", "L", "W", "W", "W"],
+    ["W", "W", "W", "W", "W"],
+];
+
+const map2 = [
+    ["L", "L", "W", "W", "W"],
+    ["L", "L", "W", "W", "W"],
+    ["W", "W", "L", "W", "W"],
+    ["W", "W", "W", "L", "L"],
+];
+
+console.log(numIslands(map1)); // Output: 1
+console.log(numIslands(map2)); // Output: 3
 
 };
 
