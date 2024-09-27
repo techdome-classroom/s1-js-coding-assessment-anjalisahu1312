@@ -1,4 +1,4 @@
-const decodeTheRing = function (s, p) {
+
 
     // write your code here
     function isMatch(message, pattern) {
