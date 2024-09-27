@@ -20,7 +20,7 @@ const getTotalIsles = function (grid) {
         }
 
         // Mark the cell as visited
-        visited.add(${i},${j});
+        visited.add(${ i },${j});
 
         // Explore all four directions
         dfs(i + 1, j); // Down
