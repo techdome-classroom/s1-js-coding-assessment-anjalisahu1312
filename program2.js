@@ -9,7 +9,7 @@ const decodeTheRing = function (s, p) {
       
         function dfs(mIndex, pIndex) {
           // Use backticks for template literals to create the memoization key
-          const key = ${mIndex}:${pIndex};
+          const key = `${mIndex}:${pIndex};
           if (key in memo) return memo[key];
       
           // If both message and pattern are fully processed
